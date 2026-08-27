@@ -24,22 +24,16 @@ public:
     void setMapNode(osgEarth::MapNode* mapNode) { _mapNode = mapNode; }
 
     // Gokyuzu dugumu: tarih/saat kontrolleri bunun uzerinden calisiyor.
-    // SkyNode olusturulamadiysa panelde ilgili bolum gizlenir.
     void setSkyNode(osgEarth::SkyNode* sky) { _sky = sky; }
 
-    // ImGui context'i ve OpenGL backend'i burada kuruluyor.
-    // viewer.setRealizeOperation(...) ile kaydedilir; realize
-    // operation'lar GL context current iken calisir.
     osg::Operation* getRealizeOperation();
 
-    // Cizim OSG'nin draw asamasinda, yine context current iken.
-    // viewer.getCamera()->setFinalDrawCallback(...) ile kaydedilir.
     osg::Camera::DrawCallback* getDrawCallback();
 
     bool handle(const osgGA::GUIEventAdapter& ea,
         osgGA::GUIActionAdapter& aa) override;
 
-    // Yardimci siniflardan cagriliyor; disaridan cagirma.
+    
     void initImGui();
     void drawImGui(osg::RenderInfo& renderInfo);
 
