@@ -57,8 +57,7 @@ GuiPanel::GuiPanel(RouteManager* routeManager)
 
 GuiPanel::~GuiPanel()
 {
-    // ImGui_ImplOpenGL3_Shutdown() burada cagrilmiyor: yikici calistiginda
-    // GL context'in current oldugu garanti degil.
+    
     if (_initialized && ImGui::GetCurrentContext())
         ImGui::DestroyContext();
 }
@@ -125,7 +124,7 @@ void GuiPanel::drawImGui(osg::RenderInfo& renderInfo)
     }
     io.DeltaTime = (float)dt;
 
-    // Saat otomatik ilerliyorsa gunesi guncelle
+
     if (_autoAdvance && _sky.valid())
     {
         _localHour += (float)(dt * _timeScale / 3600.0);
@@ -214,8 +213,6 @@ bool GuiPanel::handle(const osgGA::GUIEventAdapter& ea,
         break;
     }
 
-    // true dondurursek olay EarthManipulator'a gitmez; panelin ustundeyken
-    // haritanin donmesini boylece engelliyoruz.
     return io.WantCaptureMouse || io.WantCaptureKeyboard;
 }
 
@@ -533,7 +530,7 @@ void GuiPanel::drawSkySection()
         changed = true;
     }
 
-    // --- gun / ay ince ayar ---
+   
     ImGui::SetNextItemWidth(100.0f);
     if (ImGui::SliderInt("Ay", &_month, 1, 12))
         changed = true;
@@ -578,8 +575,7 @@ void GuiPanel::drawSkySection()
     ImGui::SetNextItemWidth(200.0f);
     if (ImGui::SliderFloat("Gece aydinligi", &_minAmbient, 0.0f, 0.5f, "%.2f"))
     {
-        // Bu osgEarth surumunde SkyNode::setMinimumAmbient yok;
-        // gunes isiginin ambient bilesenini dogrudan degistiriyoruz.
+        
         if (osg::Light* sun = _sky->getSunLight())
             sun->setAmbient(osg::Vec4(_minAmbient, _minAmbient, _minAmbient, 1.0f));
     }
