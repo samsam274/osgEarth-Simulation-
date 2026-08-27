@@ -2,8 +2,6 @@
 <map name="UAVViewerMap" type="geocentric">
 
     <options>
-        <!-- vertical_scale: arazi kabartisini abartmak icin. 1.0 gercek
-             olcek. Yukseklik farkini net gormek istersen 2.0 - 3.0 dene. -->
         <terrain vertical_scale="1.0"/>
     </options>
 
@@ -18,13 +16,6 @@
         <url>https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}</url>
         <profile>spherical-mercator</profile>
     </image>
-
-    <!-- ================================================================
-         SRTM Arazi Yuksekligi
-         Ankara ve rotanin tamamini kapsayan 4 karo. Kapsama alanini
-         genislettmek istersen ayni blogu diger .hgt dosyalari icin
-         cogalt (isim ve dosya adini degistirerek).
-         ================================================================ -->
     <GDALElevation name="SRTM N39E032">
         <url>srtm_data/N39E032.hgt</url>
     </GDALElevation>
