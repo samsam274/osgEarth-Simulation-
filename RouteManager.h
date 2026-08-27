@@ -65,9 +65,6 @@ public:
 
     float getTargetAltitude() const { return _targetAltitude; }
     void setTargetAltitude(float alt) { _targetAltitude = alt; }
-
-    // Kirmizi koninin buyuklugu (metre). Yuksekten bakinca gorunsun diye
-    // varsayilan olarak buyuk.
     float getAircraftScale() const { return _aircraftScale; }
     void setAircraftScale(float s);
 
@@ -81,14 +78,11 @@ private:
     // Ucak konisini olusturur (bir kez).
     void buildAircraft();
 
-    // lat/lon/alt -> ECEF dunya koordinati
     bool toWorld(double lat, double lon, double alt, osg::Vec3d& out) const;
 
     osg::observer_ptr<osgEarth::MapNode> _mapNode;
 
     osg::ref_ptr<osg::Group> _sceneRoot;
-    // Cizgi ve noktalari tasiyan transformlar. Sahneden cikarabilmek icin
-    // dogrudan bunlara referans tutuyoruz (Geode'a degil).
     osg::ref_ptr<osg::MatrixTransform> _lineXform;    // kirmizi rota cizgisi
     osg::ref_ptr<osg::MatrixTransform> _pointXform;   // yesil waypoint noktalari
     osg::ref_ptr<osgEarth::GeoTransform> _aircraftXform;
