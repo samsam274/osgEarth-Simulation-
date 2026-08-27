@@ -45,7 +45,6 @@ int main(int argc, char** argv)
     osg::ref_ptr<osg::Group> rootGroup = new osg::Group();
 
     // ---- Gokyuzu: gunes, ay ve yildizlar ----
-    // SkyNode mapNode'un EBEVEYNI olmali; aydinlatmayi kendisi yonetir.
     osg::ref_ptr<osgEarth::SkyNode> sky = osgEarth::SkyNode::create();
     if (sky.valid())
     {
@@ -69,7 +68,7 @@ int main(int argc, char** argv)
     }
     else
     {
-        // SkyNode olusturulamadiysa (sky nodekit eksik) duz isik kullan.
+        
         std::cout << "[UYARI] SkyNode olusturulamadi, basit isiklandirma kullaniliyor."
             << std::endl;
 
@@ -109,15 +108,12 @@ int main(int argc, char** argv)
 
     viewer.addEventHandler(guiPanel.get());
 
-    // ImGui baslatmasi realize()'dan ONCE kaydediliyor.
     viewer.setRealizeOperation(guiPanel->getRealizeOperation());
 
     viewer.realize();
 
-    // Cizim sahne cizildikten sonra, context current iken.
     viewer.getCamera()->setFinalDrawCallback(guiPanel->getDrawCallback());
 
-    // Kamerayi rotanin basina getir
     {
         osgEarth::Viewpoint vp;
         vp.focalPoint() = osgEarth::GeoPoint(
