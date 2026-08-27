@@ -32,8 +32,6 @@ RouteManager::RouteManager()
     _sceneRoot = new osg::Group();
     _sceneRoot->setName("RouteManagerRoot");
 
-    // Cizgiler ve noktalar aydinlatmadan etkilenmesin, arazinin
-    // altinda kalmasinlar.
     osg::StateSet* ss = _sceneRoot->getOrCreateStateSet();
     ss->setMode(GL_LIGHTING, osg::StateAttribute::OFF | osg::StateAttribute::PROTECTED);
     ss->setMode(GL_BLEND, osg::StateAttribute::ON);
@@ -76,7 +74,7 @@ void RouteManager::buildAircraft()
     if (_aircraftXform.valid())
         return;
 
-    // Koni: varsayilan olarak +Z yonunu gosterir.
+  
     osg::ref_ptr<osg::Cone> cone = new osg::Cone(osg::Vec3(0, 0, 0), 0.35f, 1.0f);
     osg::ref_ptr<osg::ShapeDrawable> sd = new osg::ShapeDrawable(cone.get());
     sd->setColor(osg::Vec4(1.0f, 0.15f, 0.15f, 1.0f));
@@ -84,7 +82,7 @@ void RouteManager::buildAircraft()
     osg::ref_ptr<osg::Geode> geode = new osg::Geode();
     geode->addDrawable(sd.get());
 
-    // Aydinlatma acik olsun ki koni hacimli gorunsun.
+
     osg::StateSet* ss = geode->getOrCreateStateSet();
     ss->setMode(GL_LIGHTING, osg::StateAttribute::ON | osg::StateAttribute::PROTECTED);
     osg::ref_ptr<osg::Material> mat = new osg::Material();
@@ -92,14 +90,12 @@ void RouteManager::buildAircraft()
     mat->setAmbient(osg::Material::FRONT_AND_BACK, osg::Vec4(0.4f, 0.05f, 0.05f, 1.0f));
     ss->setAttributeAndModes(mat.get(), osg::StateAttribute::ON);
 
-    // Olcek: koni birim boyutta, metreye buyutuyoruz.
+    
     _aircraftScaleXform = new osg::MatrixTransform();
     _aircraftScaleXform->setMatrix(osg::Matrix::scale(_aircraftScale, _aircraftScale, _aircraftScale));
     _aircraftScaleXform->addChild(geode.get());
 
-    // Yonelim: once koniyi +Z'den +Y'ye (kuzeye) cevir, sonra heading
-    // kadar Z ekseninde dondur. GeoTransform'un yerel cercevesi ENU:
-    // X dogu, Y kuzey, Z yukari.
+
     _aircraftRotate = new osg::MatrixTransform();
     _aircraftRotate->addChild(_aircraftScaleXform.get());
 
@@ -127,8 +123,6 @@ void RouteManager::rebuildRouteGraphics()
     if (!_mapNode.valid())
         return;
 
-    // Eski grafikleri sahneden gercekten cikar. Transformlara referans
-    // tuttugumuz icin removeChild bu sefer calisiyor.
     if (_lineXform.valid())
     {
         _sceneRoot->removeChild(_lineXform.get());
@@ -154,9 +148,7 @@ void RouteManager::rebuildRouteGraphics()
     if (worldPts->empty())
         return;
 
-    // Buyuk ECEF sayilarinda float hassasiyeti bozulur; ilk noktayi
-    // referans alip yerel koordinatta cizip MatrixTransform ile
-    // yerine tasiyoruz.
+
     const osg::Vec3d origin = (*worldPts)[0];
 
     osg::ref_ptr<osg::Vec3Array> verts = new osg::Vec3Array();
@@ -242,8 +234,7 @@ void RouteManager::removeWaypoint(size_t index)
 
     _waypoints.erase(_waypoints.begin() + index);
 
-    // Silinen waypoint aktif hedefin gerisindeyse indeksi kaydir,
-    // rotanin disina tasmasin.
+   
     if (_waypoints.empty())
         _currentIndex = 0;
     else if (_currentIndex >= _waypoints.size())
@@ -313,7 +304,7 @@ void RouteManager::update(double deltaTime)
             _currentLat += (dLat / dist) * step;
             _currentLon += (dLon / dist) * step;
 
-            // Heading: kuzeyden saat yonunde derece
+            
             _currentHeading = std::atan2(dLon, dLat) * (180.0 / PI);
             if (_currentHeading < 0.0)
                 _currentHeading += 360.0;
@@ -322,7 +313,7 @@ void RouteManager::update(double deltaTime)
         _currentAlt += (_targetAltitude - _currentAlt) * 0.05;
     }
 
-    // Ucagin sahnedeki konumunu ve yonunu guncelle
+    
     if (_aircraftXform.valid() && _mapNode.valid())
     {
         const osgEarth::SpatialReference* srs = _mapNode->getMapSRS();
