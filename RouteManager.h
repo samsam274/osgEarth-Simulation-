@@ -28,11 +28,11 @@ class RouteManager : public osg::Referenced
 public:
     RouteManager();
 
-    // mapNode'u baglar ve sahne grafigini kurar.
+    
     void init(osgEarth::MapNode* mapNode);
 
     // Ucak konisi, rota cizgisi ve waypoint noktalarini tasiyan dugum.
-    // main.cpp bunu rootGroup'a ekliyor.
+    // main.cpp bunu rootGroup'a ekliyor
     osg::Group* getSceneRoot() { return _sceneRoot.get(); }
 
     void update(double deltaTime);
