@@ -56,9 +56,6 @@ int main(int argc, char** argv)
         // (yerel 15:00 = UTC 12:00)
         sky->setDateTime(osgEarth::DateTime(2026, 6, 21, 12.0));
 
-        // Gece tamamen zifiri olmasin. Bu surumde SkyNode'da
-        // setMinimumAmbient yok; gunes isiginin ambient bilesenini
-        // dogrudan ayarliyoruz.
         if (osg::Light* sun = sky->getSunLight())
             sun->setAmbient(osg::Vec4(0.10f, 0.10f, 0.10f, 1.0f));
 
