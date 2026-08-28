@@ -44,8 +44,9 @@ cmake --build . --config Release
 
 ```bash
 
-cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=C:\Projects\vcpkg/scripts/buildsystems/vcpkg.cmake
+cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE="C:/Projects/vcpkg/scripts/buildsystems/vcpkg.cmake"
 cmake --build build --config Release
+#Not: Kendi sisteminizdeki vcpkg.cmake dosyasının konumuna göre -DCMAKE_TOOLCHAIN_FILE yolunu güncellemeyi unutmayın.
 
 ```
 <img width="1918" height="982" alt="Ekran görüntüsü 2026-08-27 170130" src="https://github.com/user-attachments/assets/6856cd7d-6212-495d-9be1-c60b72f5b094" /><br>
