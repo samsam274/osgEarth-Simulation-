@@ -16,18 +16,7 @@ add_executable(UAVViewer
     GuiPanel.h
 )
 
-# --------------------------------------------------------------------
-# Include Dizinleri
-#
-# DIKKAT: Buraya ASLA .../include/osgEarth veya .../include/osg gibi
-# alt klasorler eklenmemeli. osgEarth'un uzantisiz basliklari var
-# (Map, Version, Common, Bounds ...). O klasorler dogrudan arama
-# yoluna girerse, Windows buyuk/kucuk harf duyarsiz oldugu icin
-# standart kutuphanedeki #include <map> satiri osgEarth/Map dosyasini
-# cekiyor ve std::map / std::multimap tamamen kayboluyor.
-# Sadece ust "include" dizini eklenir; <osgEarth/MapNode> zaten
-# buradan dogru sekilde cozulur.
-# --------------------------------------------------------------------
+
 target_include_directories(UAVViewer PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
     "${SIMDIS_SDK_DIR}/OpenSceneGraph/3.6.5/include"
@@ -68,9 +57,7 @@ if(MSVC)
         USE_SHADOW_CASTER
     )
 
-    # F5 ile calistirinca calisma dizini proje koku olsun.
-    # UAVViewer.earth, cessna.osgb ve srtm_data/ orada duruyor;
-    # boylece hicbir dosyayi kopyalamaya gerek kalmaz.
+ 
     set_target_properties(UAVViewer PROPERTIES
         VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
         VS_DEBUGGER_ENVIRONMENT "PATH=${SIMDIS_SDK_DIR}/OpenSceneGraph/3.6.5/bin;${SIMDIS_SDK_DIR}/osgEarth/OSG-3.6.5/bin;%PATH%"
